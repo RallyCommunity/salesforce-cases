@@ -4,29 +4,26 @@ SF cases
 ## Overview
 ![](pic.png)
 
-Rally Salesforce integration uses a WebLink type of custom field to reference a related Salesforce case.
-Two limitatations of this integration are relevant in this context:
-1) WebLink fields are not queriable.
-2) Even if a Rally defect is linked to more than one Saleseforce case, only the first related case refernce
-populates the WebLink filed.
+This app extracts Salesforce case URLs created in Rally by Rally-Salesforce integration and builds a grid of those cases
+grouped by Rally artifact those cases related to.
 
-To workaround the last limitation the app parses Discussion collections on artifacts because each Salesforce case linked
-to the defect triggers creation of a ConversationPost. (In WS API Discussions are collections of ConversationPost objects.)
+Rally-Salesforce integration uses a WebLink type of custom field to reference a related Salesforce case.
 
-The app parses ConversationPosts to identify and extract html 'a href' attribute to populate SALESFORCE CASE column.
+Two limitations of this integration are relevant in this context: 
+
+1) WebLink fields are not queriable. 
+
+2) Even if a Rally defect is linked to more than one Saleseforce case, only the first related case reference populates the WebLink filed.
+
+To workaround the last limitation the app parses Discussion collections on artifacts because each Salesforce case linked to the defect triggers creation of a ConversationPost. (In WS API Discussions are collections of ConversationPost objects.)
+
+The app parses ConversationPosts to identify and extract html 'a href' attribute to populate CASE column.
 
 (Another alternative would be to parse Revisions, but that would be even more resource-intensive).
 
-IMPORTANT: It's strongly recommended that the user keeps the filter by CreationDate of the ConversationPosts narrow to
-limit the volume of data that is being parsed. Currently the app looks 90 days back.
+IMPORTANT: It's strongly recommended that the user keeps the filter by CreationDate of the ConversationPosts narrow to limit the volume of data that is being parsed. Currently the app looks 90 days back.
 
-Note: The app traverses from ConversationPost to Artifact. It does not hydrate the Artifact to get to a particular type,
-e.g. Defect to avoid additional WS API requests. Since custom fields specific to Salesforce integration exist on Defect object,
-and not on its parent Artifact, the app does not access those fields.
-Instead of using 'c_NumberofCases' the app uses ExtJS grid's count feature.
-This also avoids a possible discrepancy between the number returned by 'c_NumberofCases' and the actual number of Salesforce
-cases grouped under every artifact in the grid due to a time window restricted by CreationDate filter, which may leave some cases outside
-of the date range.
+Note: The app traverses from ConversationPost to Artifact. It does not hydrate the Artifact to get to a particular type, e.g. Defect to avoid additional WS API requests. Since custom fields specific to Salesforce integration exist on Defect object, and not on its parent Artifact, the app does not access those fields. Instead of using 'c_NumberofCases' the app uses ExtJS grid's count feature. This also avoids a possible discrepancy between the number returned by 'c_NumberofCases' and the actual number of Salesforce cases grouped under every artifact in the grid due to a time window restricted by CreationDate filter, which may leave some cases outside of the date range.
 
 ## License
 This app is available AS IS. It is not supported by Rally Support.

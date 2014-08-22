@@ -15,7 +15,9 @@ Two limitations of this integration are relevant in this context:
 
 2) Even if a Rally defect is linked to more than one Saleseforce case, only the first related case reference populates the WebLink filed.
 
-To workaround the last limitation the app parses Discussion collections on artifacts because each Salesforce case linked to the defect triggers creation of a ConversationPost. (In WS API Discussions are collections of ConversationPost objects.)
+Since we cannot count on WebLink type custom field to give us all cases related to a given defect, the app parses Discussion collections on artifacts.
+This is possible because each Salesforce case linked to the defect triggers creation of a ConversationPost.
+(In WS API Discussions are collections of ConversationPost objects.)
 
 The app parses ConversationPosts to identify and extract html 'a href' attribute to populate CASE column.
 

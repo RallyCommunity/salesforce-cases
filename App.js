@@ -45,7 +45,7 @@ launch: function() {
                     Case: text,
                     Name: post.get('Artifact').FormattedID,
                     Artifact: post.get('Artifact'),
-                    FormattedID: post.get('Artifact').FormattedID,
+                    ID: post.get('Artifact').FormattedID,
                     Project: post.get('Artifact').Project._refObjectName
                 };
             posts.push(p);
@@ -57,7 +57,7 @@ launch: function() {
    _createGrid: function(posts) {
         var store = Ext.create('Rally.data.custom.Store', {
                 data: posts,
-                groupField: 'FormattedID'  
+                groupField: 'ID'  
             });
         this.grid = this.add({
             xtype: 'rallygrid',
